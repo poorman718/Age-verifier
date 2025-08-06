@@ -8,17 +8,17 @@
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden}
     
-    /* Video Background */
-    .video-background {
+    /* Dynamic Background Image */
+    .dynamic-background {
       position:fixed;
-      top:50%;
-      left:50%;
-      transform:translate(-50%,-50%);
-      min-width:100%;
-      min-height:100%;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
       z-index:-2;
       opacity:0.3;
       object-fit:cover;
+      transition:opacity 0.5s ease;
     }
     
     /* Background Overlay */
@@ -62,10 +62,8 @@
   </style>
 </head>
 <body>
-  <!-- Video Background (Replace with your video) -->
-  <video class="video-background" autoplay muted loop playsinline>
-    <source src="https://example.com/your-background-video.mp4" type="video/mp4">
-  </video>
+  <!-- Dynamic Background (Images/GIFs) -->
+  <img class="dynamic-background" id="dynamic-bg" src="" alt="Background">
   
   <div class="background-overlay"></div>
   <div class="light light-1"></div>
@@ -92,26 +90,44 @@
   </div>
 
   <script>
-    // Video Background Controller
-    const videoBg = document.querySelector('.video-background');
+    // Background Images/GIFs Collection
+    const backgroundMedia = [
+      "https://example.com/bg1.jpg",
+      "https://example.com/bg2.gif", 
+      "https://example.com/bg3.jpg",
+      "https://example.com/bg4.gif",
+      "https://example.com/bg5.jpg"
+    ];
     
-    // Set video to stop after 1 minute (60000ms)
-    setTimeout(() => {
-      videoBg.pause();
-    }, 60000);
+    // Initialize background
+    const dynamicBg = document.getElementById('dynamic-bg');
+    let currentBgIndex = 0;
+    
+    function changeBackground() {
+      currentBgIndex = (currentBgIndex + 1) % backgroundMedia.length;
+      dynamicBg.style.opacity = 0;
+      
+      setTimeout(() => {
+        dynamicBg.src = backgroundMedia[currentBgIndex];
+        dynamicBg.style.opacity = 0.3;
+      }, 300);
+    }
+    
+    // Set initial background
+    dynamicBg.src = backgroundMedia[currentBgIndex];
 
-    // Main App with your new questions
+    // Main App
     const questions = [
-      ["Are you 18+? 😉", "Yes, I'm legal", "No (Access denied)"],
-      ["What's your gender?", "Male", "Female"],
-      ["What turns you on more?", "Straight (Male + Female)", "Same Sex (Gay/Lesbian)"],
-      ["Who excites you more?", "Young & wild (18-25)", "Hot & mature (30+)"],
-      ["What do you prefer watching?", "Real amateur fun", "Professional scenes"],
-      ["What's your vibe?", "Slow & romantic 💖", "Rough & hardcore 💦"],
-      ["Solo or couple action?", "Solo play", "Couples only"],
-      ["Into roleplay?", "Hell yes!", "Not really"],
-      ["Like a little kink?", "BDSM, please 😈", "Keep it soft"],
-      ["What's your flavor?", "Desi & spicy 🇮🇳", "International 🔥"]
+      ["Are you 18+?", "Yes", "No"],
+      ["Your gender?", "Male", "Female"],
+      ["Content preference?", "Female-focused", "Male-focused"],
+      ["Content type?", "Soft", "Hardcore"],
+      ["Scene preference?", "Solo", "Couple"],
+      ["Orientation?", "Straight", "Same-Sex"],
+      ["Visuals vs Story?", "Visual", "Story"],
+      ["Production quality?", "Amateur", "Professional"],
+      ["Video length?", "Short", "Long"],
+      ["Custom suggestions?", "Yes", "No"]
     ];
 
     const container = document.getElementById("question-container");
@@ -155,6 +171,7 @@
     function selectOption(qIndex, optIndex) {
       selections[qIndex] = questions[qIndex][optIndex + 1];
       localStorage.setItem("adultAnswers", JSON.stringify(selections));
+      changeBackground(); // Change background on each selection
       showQuestion(qIndex + 1);
     }
 
