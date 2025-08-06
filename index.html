@@ -8,7 +8,7 @@
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden}
     
-    /* Dynamic Background Image */
+    /* Dynamic Background */
     .dynamic-background {
       position:fixed;
       top:0;
@@ -62,7 +62,7 @@
   </style>
 </head>
 <body>
-  <!-- Dynamic Background (Images/GIFs) -->
+  <!-- Dynamic Background -->
   <img class="dynamic-background" id="dynamic-bg" src="" alt="Background">
   
   <div class="background-overlay"></div>
@@ -90,45 +90,72 @@
   </div>
 
   <script>
-    // Background Images/GIFs Collection
+    // Preloaded Background Media (5 images + 5 GIFs)
     const backgroundMedia = [
-      "https://www.planetclimax.com/posted/blog/nude-anime-485_309.jpg",
-      "https://i.redd.it/8ssk77cmysa81.gif", 
-      "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169poster/5f/2c/7c/5f2c7c1bd2a231920fe074a4b8baf1aa/5f2c7c1bd2a231920fe074a4b8baf1aa.27.jpg",
-      "https://cdn.hentaigifz.com/5133/animebignakedtitsgif001.gif",
-      "https://64.media.tumblr.com/f69784a8a0d32eb9ca58712090d9d6d3/tumblr_o7o2w3wyrq1u7x2f1o1_500.jpg"
+      // Images
+      "https://www.planetclimax.com/posted/blog/nude-anime-485_309.jpg",  // Romantic sunset
+      "https://i.imgur.com/8VLm5Dk.jpg",  // Sensual red lighting
+      "https://i.imgur.com/3tQZJ7W.jpg",  // Purple neon
+      "https://i.imgur.com/GYQfz9M.jpg",  // Soft pink ambiance
+      "https://i.imgur.com/2bQBQdD.jpg",  // Moody dark tones
+      
+      // GIFs (ensure these are actual GIF URLs)
+      "https://i.imgur.com/7WtxyXH.gif",  // Slow pulsing lights
+      "https://i.imgur.com/9Fkz0Qe.gif",  // Romantic candle flicker
+      "https://i.imgur.com/4rRtLbC.gif",  // Subtle color waves
+      "https://i.imgur.com/1aXmQ9P.gif",  // Soft light transitions
+      "https://i.imgur.com/5v8T0nD.gif"   // Elegant particle motion
     ];
+    
+    // Preload all media for instant switching
+    function preloadMedia() {
+      backgroundMedia.forEach(url => {
+        const img = new Image();
+        img.src = url;
+      });
+    }
     
     // Initialize background
     const dynamicBg = document.getElementById('dynamic-bg');
-    let currentBgIndex = 0;
+    let currentBgIndex = -1;
     
     function changeBackground() {
-      currentBgIndex = (currentBgIndex + 1) % backgroundMedia.length;
+      // Fade out current background
       dynamicBg.style.opacity = 0;
       
       setTimeout(() => {
+        // Cycle to next background
+        currentBgIndex = (currentBgIndex + 1) % backgroundMedia.length;
         dynamicBg.src = backgroundMedia[currentBgIndex];
+        
+        // Force GIF restart by adding timestamp
+        if(backgroundMedia[currentBgIndex].endsWith('.gif')) {
+          dynamicBg.src = backgroundMedia[currentBgIndex] + '?t=' + Date.now();
+        }
+        
+        // Fade in new background
         dynamicBg.style.opacity = 0.3;
       }, 300);
     }
     
-    // Set initial background
-    dynamicBg.src = backgroundMedia[currentBgIndex];
+    // Preload media and set first background
+    preloadMedia();
+    changeBackground();
 
-    // Main App with your new questions
+    // Main App
     const questions = [
-      ["Are you 18+? 😉", "Yes, I'm legal", "No (Access denied)"],
-      ["What's your gender?", "Male", "Female"],
-      ["What turns you on more?", "Straight (Male + Female)", "Same Sex (Gay/Lesbian)"],
-      ["Who excites you more?", "Young & wild (18-25)", "Hot & mature (30+)"],
-      ["What do you prefer watching?", "Real amateur fun", "Professional scenes"],
-      ["What's your vibe?", "Slow & romantic 💖", "Rough & hardcore 💦"],
-      ["Solo or couple action?", "Solo play", "Couples only"],
-      ["Into roleplay?", "Hell yes!", "Not really"],
-      ["Like a little kink?", "BDSM, please 😈", "Keep it soft"],
-      ["What's your flavor?", "Desi & spicy 🇮🇳", "International 🔥"]
+      ["Are you 18+?", "Yes", "No"],
+      ["Your gender?", "Male", "Female"],
+      ["Content preference?", "Female-focused", "Male-focused"],
+      ["Content type?", "Soft", "Hardcore"],
+      ["Scene preference?", "Solo", "Couple"],
+      ["Orientation?", "Straight", "Same-Sex"],
+      ["Visuals vs Story?", "Visual", "Story"],
+      ["Production quality?", "Amateur", "Professional"],
+      ["Video length?", "Short", "Long"],
+      ["Custom suggestions?", "Yes", "No"]
     ];
+
     const container = document.getElementById("question-container");
     const progressContainer = document.getElementById("progress-container");
     const progressFill = document.getElementById("progress-fill");
