@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adult Verification</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden}
+    
+    /* Video Background */
+    .video-background {
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      min-width:100%;
+      min-height:100%;
+      z-index:-2;
+      opacity:0.3;
+      object-fit:cover;
+    }
+    
+    /* Background Overlay */
+    .background-overlay {
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:linear-gradient(135deg, rgba(15,12,41,0.7) 0%, rgba(26,26,46,0.7) 100%);
+      z-index:-1;
+      backdrop-filter:blur(2px);
+    }
+    
+    .light{position:fixed;border-radius:50%;filter:blur(60px);opacity:.3;z-index:-1;animation:float 15s infinite ease-in-out}
+    .light-1{width:300px;height:300px;background:#ff4d6d;top:20%;left:10%}
+    .light-2{width:400px;height:400px;background:#9d4edd;bottom:15%;right:10%;animation-delay:3s}
+    .light-3{width:250px;height:250px;background:#ff758f;top:60%;left:30%;animation-delay:6s}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(5deg)}}
+    
+    .content-box{width:95%;max-width:500px;background:rgba(255,255,255,.1);backdrop-filter:blur(15px);border-radius:20px;padding:25px;box-shadow:0 10px 30px rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1);text-align:center;margin:0 auto}
+    h1{color:#fff;font-size:clamp(1.8rem,5vw,2.5rem);margin-bottom:20px;text-shadow:0 2px 10px rgba(255,77,109,.5);position:relative}
+    h1:after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:80px;height:3px;background:linear-gradient(90deg,#ff4d6d,#9d4edd);border-radius:3px}
+    .question-box{display:none;margin:20px 0}
+    .question-box.active{display:block;animation:fadeIn .5s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .question-text{color:#fff;font-size:clamp(1.1rem,4vw,1.3rem);margin-bottom:25px;line-height:1.5}
+    .options{display:grid;grid-template-columns:1fr;gap:15px}
+    @media(min-width:480px){.options{grid-template-columns:1fr 1fr}}
+    .option{background:linear-gradient(45deg,#ff4d6d,#9d4edd);padding:15px;border-radius:12px;color:#fff;cursor:pointer;transition:all .3s ease;border:none;font-size:clamp(.9rem,3vw,1rem);box-shadow:0 4px 15px rgba(157,78,221,.3)}
+    .option:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(157,78,221,.4)}
+    .progress-container{width:100%;margin:20px 0;display:flex;align-items:center;gap:10px}
+    .progress-text{color:rgba(255,255,255,.7);font-size:.9rem;min-width:50px}
+    .progress-bar{flex:1;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+    .progress-fill{height:100%;background:linear-gradient(90deg,#ff4d6d,#9d4edd);border-radius:3px;transition:width .4s ease;width:0%}
+    .finish-container{display:none;justify-content:center;margin-top:20px}
+    .finish{background:linear-gradient(45deg,#ff4d6d,#9d4edd);color:#fff;padding:14px 30px;border-radius:50px;font-size:1rem;font-weight:600;text-decoration:none;display:flex;align-items:center;justify-content:center;max-width:200px;box-shadow:0 4px 15px rgba(157,78,221,.3);transition:all .3s ease}
+    .finish:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(157,78,221,.4)}
+    .finish svg{margin-left:8px;transition:transform .3s ease}
+    .finish:hover svg{transform:translateX(5px)}
+  </style>
+</head>
+<body>
+  <!-- Video Background (Replace with your video) -->
+  <video class="video-background" autoplay muted loop playsinline>
+    <source src="https://example.com/your-background-video.mp4" type="video/mp4">
+  </video>
+  
+  <div class="background-overlay"></div>
+  <div class="light light-1"></div>
+  <div class="light light-2"></div>
+  <div class="light light-3"></div>
+
+  <div class="content-box">
+    <h1>🔞 Age Verification</h1>
+    <div class="progress-container" id="progress-container">
+      <div class="progress-text">0/10</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+    <div id="question-container"></div>
+    <div class="finish-container" id="finish-container">
+      <a href="https://heylink.me/lilifreeha/" class="finish" target="_blank">
+        Continue
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Video Background Controller
+    const videoBg = document.querySelector('.video-background');
+    
+    // Set video to stop after 1 minute (60000ms)
+    setTimeout(() => {
+      videoBg.pause();
+    }, 60000);
+
+    // Main App with your new questions
+    const questions = [
+      ["Are you 18+? 😉", "Yes, I'm legal", "No (Access denied)"],
+      ["What's your gender?", "Male", "Female"],
+      ["What turns you on more?", "Straight (Male + Female)", "Same Sex (Gay/Lesbian)"],
+      ["Who excites you more?", "Young & wild (18-25)", "Hot & mature (30+)"],
+      ["What do you prefer watching?", "Real amateur fun", "Professional scenes"],
+      ["What's your vibe?", "Slow & romantic 💖", "Rough & hardcore 💦"],
+      ["Solo or couple action?", "Solo play", "Couples only"],
+      ["Into roleplay?", "Hell yes!", "Not really"],
+      ["Like a little kink?", "BDSM, please 😈", "Keep it soft"],
+      ["What's your flavor?", "Desi & spicy 🇮🇳", "International 🔥"]
+    ];
+
+    const container = document.getElementById("question-container");
+    const progressContainer = document.getElementById("progress-container");
+    const progressFill = document.getElementById("progress-fill");
+    const progressText = document.querySelector(".progress-text");
+    const finishContainer = document.getElementById("finish-container");
+    const selections = new Array(questions.length).fill(null);
+
+    // Initialize questions
+    questions.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.className = "question-box";
+      div.id = `q${i}`;
+      div.innerHTML = `
+        <div class="question-text"><strong>${i + 1}. ${q[0]}</strong></div>
+        <div class="options">
+          <div class="option" onclick="selectOption(${i}, 0)">${q[1]}</div>
+          <div class="option" onclick="selectOption(${i}, 1)">${q[2]}</div>
+        </div>`;
+      container.appendChild(div);
+    });
+
+    function showQuestion(index) {
+      document.querySelector('.question-box.active')?.classList.remove('active');
+      if (index < questions.length) {
+        document.getElementById(`q${index}`).classList.add('active');
+        updateProgress(index);
+      } else {
+        progressContainer.style.display = 'none';
+        finishContainer.style.display = 'flex';
+      }
+    }
+
+    function updateProgress(index) {
+      const percent = (index / questions.length) * 100;
+      progressFill.style.width = `${percent}%`;
+      progressText.textContent = `${index}/${questions.length}`;
+    }
+
+    function selectOption(qIndex, optIndex) {
+      selections[qIndex] = questions[qIndex][optIndex + 1];
+      localStorage.setItem("adultAnswers", JSON.stringify(selections));
+      showQuestion(qIndex + 1);
+    }
+
+    // Start first question
+    showQuestion(0);
+  </script>
+</body>
+</html>
