@@ -5,233 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adult Verification</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden}
     
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    /* Dynamic Background Container */
-    .bg-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-    }
-    
-    .dynamic-background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.3;
-      transition: opacity 0.5s ease;
+    /* Video Background */
+    .video-background {
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      min-width:100%;
+      min-height:100%;
+      z-index:-2;
+      opacity:0.3;
+      object-fit:cover;
     }
     
     /* Background Overlay */
     .background-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(15,12,41,0.7) 0%, rgba(26,26,46,0.7) 100%);
-      z-index: -1;
-      backdrop-filter: blur(2px);
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:linear-gradient(135deg, rgba(15,12,41,0.7) 0%, rgba(26,26,46,0.7) 100%);
+      z-index:-1;
+      backdrop-filter:blur(2px);
     }
     
-    .light {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.3;
-      z-index: -1;
-      animation: float 15s infinite ease-in-out;
+    .light{position:fixed;border-radius:50%;filter:blur(60px);opacity:.3;z-index:-1;animation:float 15s infinite ease-in-out}
+    .light-1{width:300px;height:300px;background:#ff4d6d;top:20%;left:10%}
+    .light-2{width:400px;height:400px;background:#9d4edd;bottom:15%;right:10%;animation-delay:3s}
+    .light-3{width:250px;height:250px;background:#ff758f;top:60%;left:30%;animation-delay:6s}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(5deg)}}
+    
+    .content-box{width:95%;max-width:500px;background:rgba(255,255,255,.1);backdrop-filter:blur(15px);border-radius:20px;padding:25px;box-shadow:0 10px 30px rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1);text-align:center;margin:0 auto}
+    h1{color:#fff;font-size:clamp(1.8rem,5vw,2.5rem);margin-bottom:20px;text-shadow:0 2px 10px rgba(255,77,109,.5);position:relative}
+    h1:after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:80px;height:3px;background:linear-gradient(90deg,#ff4d6d,#9d4edd);border-radius:3px}
+    .question-box{display:none;margin:20px 0}
+    .question-box.active{display:block;animation:fadeIn .5s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .question-text{color:#fff;font-size:clamp(1.1rem,4vw,1.3rem);margin-bottom:25px;line-height:1.5}
+    .options{display:grid;grid-template-columns:1fr;gap:15px}
+    @media(min-width:480px){.options{grid-template-columns:1fr 1fr}}
+    .option{background:linear-gradient(45deg,#ff4d6d,#9d4edd);padding:15px;border-radius:12px;color:#fff;cursor:pointer;transition:all .3s ease;border:none;font-size:clamp(.9rem,3vw,1rem);box-shadow:0 4px 15px rgba(157,78,221,.3)}
+    .option:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(157,78,221,.4)}
+    .progress-container{width:100%;margin:20px 0;display:flex;align-items:center;gap:10px}
+    .progress-text{color:rgba(255,255,255,.7);font-size:.9rem;min-width:50px}
+    .progress-bar{flex:1;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+    .progress-fill{height:100%;background:linear-gradient(90deg,#ff4d6d,#9d4edd);border-radius:3px;transition:width .4s ease;width:0%}
+    .finish-container{display:none;justify-content:center;margin-top:20px}
+    .finish{background:linear-gradient(45deg,#ff4d6d,#9d4edd);color:#fff;padding:14px 30px;border-radius:50px;font-size:1rem;font-weight:600;text-decoration:none;display:flex;align-items:center;justify-content:center;max-width:200px;box-shadow:0 4px 15px rgba(157,78,221,.3);transition:all .3s ease}
+    .finish:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(157,78,221,.4)}
+    .finish svg{margin-left:8px;transition:transform .3s ease}
+    .finish:hover svg{transform:translateX(5px)}
+    
+    /* Video URL Input */
+    .video-controls {
+      position:fixed;
+      bottom:10px;
+      left:10px;
+      background:rgba(0,0,0,0.5);
+      padding:10px;
+      border-radius:5px;
+      z-index:100;
     }
-    
-    .light-1 { width: 300px; height: 300px; background: #ff4d6d; top: 20%; left: 10%; }
-    .light-2 { width: 400px; height: 400px; background: #9d4edd; bottom: 15%; right: 10%; animation-delay: 3s; }
-    .light-3 { width: 250px; height: 250px; background: #ff758f; top: 60%; left: 30%; animation-delay: 6s; }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0); }
-      50% { transform: translateY(-20px) rotate(5deg); }
-    }
-    
-    .content-box {
-      width: 95%;
-      max-width: 500px;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      border: 1px solid rgba(255,255,255,0.1);
-      text-align: center;
-      margin: 0 auto;
-    }
-    
-    h1 {
-      color: #fff;
-      font-size: clamp(1.8rem, 5vw, 2.5rem);
-      margin-bottom: 20px;
-      text-shadow: 0 2px 10px rgba(255,77,109,0.5);
-      position: relative;
-    }
-    
-    h1::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(90deg, #ff4d6d, #9d4edd);
-      border-radius: 3px;
-    }
-    
-    .question-box {
-      display: none;
-      margin: 20px 0;
-    }
-    
-    .question-box.active {
-      display: block;
-      animation: fadeIn 0.5s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .question-text {
-      color: #fff;
-      font-size: clamp(1.1rem, 4vw, 1.3rem);
-      margin-bottom: 25px;
-      line-height: 1.5;
-    }
-    
-    .options {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 15px;
-    }
-    
-    @media (min-width: 480px) {
-      .options {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    
-    .option {
-      background: linear-gradient(45deg, #ff4d6d, #9d4edd);
-      padding: 15px;
-      border-radius: 12px;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: none;
-      font-size: clamp(0.9rem, 3vw, 1rem);
-      box-shadow: 0 4px 15px rgba(157,78,221,0.3);
-    }
-    
-    .option:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(157,78,221,0.4);
-    }
-    
-    .progress-container {
-      width: 100%;
-      margin: 20px 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .progress-text {
-      color: rgba(255,255,255,0.7);
-      font-size: 0.9rem;
-      min-width: 50px;
-    }
-    
-    .progress-bar {
-      flex: 1;
-      height: 6px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #ff4d6d, #9d4edd);
-      border-radius: 3px;
-      transition: width 0.4s ease;
-      width: 0%;
-    }
-    
-    .finish-container {
-      display: none;
-      justify-content: center;
-      margin-top: 20px;
-    }
-    
-    .finish {
-      background: linear-gradient(45deg, #ff4d6d, #9d4edd);
-      color: #fff;
-      padding: 14px 30px;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 600;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 200px;
-      box-shadow: 0 4px 15px rgba(157,78,221,0.3);
-      transition: all 0.3s ease;
-    }
-    
-    .finish:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(157,78,221,0.4);
-    }
-    
-    .finish svg {
-      margin-left: 8px;
-      transition: transform 0.3s ease;
-    }
-    
-    .finish:hover svg {
-      transform: translateX(5px);
+    #videoUrl {
+      width:200px;
+      padding:5px;
+      border-radius:3px;
+      border:none;
     }
   </style>
 </head>
 <body>
-  <!-- Background Container -->
-  <div class="bg-container" id="bg-container">
-    <!-- Backgrounds will be inserted here by JavaScript -->
-  </div>
+  <!-- Video Background -->
+  <video class="video-background" id="bgVideo" autoplay muted loop playsinline>
+    <!-- Default video will be set via JavaScript -->
+  </video>
   
   <div class="background-overlay"></div>
   <div class="light light-1"></div>
   <div class="light light-2"></div>
   <div class="light light-3"></div>
+
+  <!-- Video URL Input (hidden by default) -->
+  <div class="video-controls" style="display:none">
+    <input type="text" id="videoUrl" placeholder="Paste video URL">
+    <button onclick="changeVideo()">Apply</button>
+  </div>
 
   <div class="content-box">
     <h1>🔞 Age Verification</h1>
@@ -253,71 +115,34 @@
   </div>
 
   <script>
-    // Background Images/GIFs Collection
-    const backgroundMedia = [
-      // Images
-      "https://www.planetclimax.com/posted/blog/nude-anime-485_309.jpg",  // Romantic sunset
-      "https://ic-vt-nss.xhcdn.com/a/MmYyNDE0ZTU0ZWU2ZDY4ZjVkOGRlMmJhNzM0YzdkYzI/s(w:2560,h:1440),webp/025/600/289/v2/2560x1440.220.jpg",  // Sensual red lighting
-      "https://video.damplips.com/pics/wp-content/uploads/2021/05/anime-slut.jpg",  // Purple neon
-      "https://ic-vt-nss.xhcdn.com/a/ZDc3NzUzNWY2ZTMxODUwNmEwMjZiMDBkYWU0ZjMxNTY/s(w:640,h:360),webp/026/242/049/v2/2560x1440.234.jpg",  // Soft pink ambiance
-      "https://zzcartoon.com/contents/videos_screenshots/9000/9569/preview.mp4.jpg",  // Moody dark tones
-      
-      // GIFs (ensure these are actual GIF URLs)
-      "https://picsegg.com/pics/937/sexy-nude-anime-boobs.gif",  // Slow pulsing lights
-      "https://i.imgur.com/9Fkz0Qe.gif",  // Romantic candle flicker
-      "https://i.imgur.com/4rRtLbC.gif",  // Subtle color waves
-      "https://i.imgur.com/1aXmQ9P.gif",  // Soft light transitions
-      "https://i.imgur.com/5v8T0nD.gif"   // Elegant particle motion
-    ];
+    // Video Background Controller
+    const videoBg = document.getElementById('bgVideo');
     
-    const bgContainer = document.getElementById('bg-container');
-    let currentBgIndex = 0;
+    // Set default video (can be any direct video URL)
+    videoBg.src = 'https://xhamster.com/videos/hot-bitches-created-by-ai-these-sluts-will-make-you-cum-hot-nude-anime-girls-with-beautiful-tits-hentai-girls-xhUlHT9?utm_source=ext_shared&utm_medium=referral&utm_campaign=link';
     
-    // Preload all backgrounds
-    function preloadBackgrounds() {
-      backgroundMedia.forEach(url => {
-        const img = new Image();
-        img.src = url;
-      });
-    }
-    
-    // Change background function
-    function changeBackground() {
-      currentBgIndex = (currentBgIndex + 1) % backgroundMedia.length;
-      
-      // Create new background element
-      const newBg = document.createElement('img');
-      newBg.className = 'dynamic-background';
-      newBg.src = backgroundMedia[currentBgIndex];
-      newBg.style.opacity = '0';
-      
-      // Add to container
-      bgContainer.appendChild(newBg);
-      
-      // Fade in new background
-      setTimeout(() => {
-        newBg.style.opacity = '0.3';
-      }, 10);
-      
-      // Remove old background after transition
-      const oldBg = bgContainer.querySelector('.dynamic-background:not(:last-child)');
-      if (oldBg) {
-        oldBg.style.opacity = '0';
-        setTimeout(() => {
-          bgContainer.removeChild(oldBg);
-        }, 500);
+    // Change video function (accessible via console)
+    window.changeVideo = function(url) {
+      const newUrl = url || document.getElementById('videoUrl').value;
+      if(newUrl) {
+        videoBg.src = newUrl;
+        videoBg.load();
+        videoBg.play();
+        localStorage.setItem('bgVideoUrl', newUrl);
       }
     }
     
-    // Initialize first background
-    function initBackground() {
-      const firstBg = document.createElement('img');
-      firstBg.className = 'dynamic-background';
-      firstBg.src = backgroundMedia[0];
-      firstBg.style.opacity = '0.3';
-      bgContainer.appendChild(firstBg);
+    // Load saved video URL if exists
+    if(localStorage.getItem('bgVideoUrl')) {
+      videoBg.src = localStorage.getItem('bgVideoUrl');
     }
     
+    // Set video to stop after 1 minute (60000ms)
+    setTimeout(() => {
+      videoBg.pause();
+    }, 60000);
+
+    // Main App
     // Main App with your new questions
     const questions = [
       ["Are you 18+? 😉", "Yes, I'm legal", "No (Access denied)"],
@@ -373,16 +198,19 @@
     function selectOption(qIndex, optIndex) {
       selections[qIndex] = questions[qIndex][optIndex + 1];
       localStorage.setItem("adultAnswers", JSON.stringify(selections));
-      changeBackground(); // Change background on each selection
       showQuestion(qIndex + 1);
     }
 
-    // Initialize
-    window.onload = function() {
-      preloadBackgrounds();
-      initBackground();
-      showQuestion(0);
-    };
+    // Start first question
+    showQuestion(0);
+    
+    // Enable video controls (press V to show/hide)
+    document.addEventListener('keydown', (e) => {
+      if(e.key.toLowerCase() === 'v') {
+        const controls = document.querySelector('.video-controls');
+        controls.style.display = controls.style.display === 'none' ? 'block' : 'none';
+      }
+    });
   </script>
 </body>
 </html>
