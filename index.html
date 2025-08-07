@@ -43,7 +43,7 @@
     }
 
     .bg-image.active {
-      opacity: 0.5; /* Increased from 0.3 to 0.5 for better visibility */
+      opacity: 0.5;
     }
 
     /* Mobile Images (9:16 ratio) */
@@ -58,7 +58,7 @@
     }
 
     .mobile-bg-image.active {
-      opacity: 0.5; /* Same as desktop for consistency */
+      opacity: 0.5;
     }
 
     /* Background Overlay */
@@ -379,13 +379,27 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
       </svg>
-      Exit
+      Back to Verification
     </button>
   </div>
 
   <script>
     // Background Images (Replace with your actual image URLs)
-    const backgroundImages = [
+    const desktopBackgroundImages = [
+      'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=1920',
+      'https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?w=1920',
+      'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1920',
+      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=1920',
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1920',
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1920',
+      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=1920',
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1920',
+      'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=1920',
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1920'
+    ];
+
+    // Mobile Background Images (9:16 ratio - using your provided links)
+    const mobileBackgroundImages = [
       'https://ibb.co/Gfn6ZLrn',
       'https://ibb.co/whd7dN84',
       'https://ibb.co/YFrq6DWR',
@@ -396,21 +410,7 @@
       'https://ibb.co/VW9TmghK',
       'https://ibb.co/PzNRk14b',
       'https://ibb.co/rKdqqhDT',
-      'https://ibb.co/whMgJKP2',
-    ];
-
-    // Mobile Background Images (9:16 ratio - replace with your vertical images)
-    const mobileBackgroundImages = [
-      'https://ibb.co/whMgJKP2',
-      'https://ibb.co/rKdqqhDT',
-      'https://ibb.co/PzNRk14b',
-      'https://ibb.co/VW9TmghK',
-      'https://ibb.co/HTfx0dFL',
-      'https://ibb.co/8tcp2NN',
-      'https://ibb.co/Ng9T8W30',
-      'https://ibb.co/4RzYpvtm',
-      'https://ibb.co/YFrq6DWR',
-      'https://ibb.co/whd7dN84'
+      'https://ibb.co/whMgJKP2'
     ];
 
     // Background Management
@@ -433,7 +433,7 @@
       mobileBackgroundImages.forEach((img, index) => {
         const imgElement = document.createElement('img');
         imgElement.className = 'mobile-bg-image';
-        imgElement.src = img;
+        imgElement.src = img.replace('ibb.co', 'i.ibb.co') + '.jpg'; // Convert to direct image links
         imgElement.alt = `Mobile Background ${index + 1}`;
         mobileContainer.appendChild(imgElement);
       });
