@@ -32,7 +32,7 @@
       z-index: -2;
     }
 
-    /* Desktop Background Images */
+    /* Desktop Images */
     .bg-image {
       position: absolute;
       width: 100%;
@@ -43,52 +43,42 @@
     }
 
     .bg-image.active {
-      opacity: 0.7; /* Increased opacity for clearer images */
+      opacity: 0.5; /* Increased from 0.3 to 0.5 for better visibility */
     }
 
-    /* Mobile Background Images (9:16 ratio) */
+    /* Mobile Images (9:16 ratio) */
     .mobile-bg-image {
       position: absolute;
       width: 100%;
-      height: 177.78vw; /* 9:16 ratio */
+      height: 100%;
       object-fit: cover;
       opacity: 0;
       transition: opacity 1.5s ease-in-out;
-      display: none; /* Hidden by default */
+      aspect-ratio: 9/16;
     }
 
     .mobile-bg-image.active {
-      opacity: 0.7; /* Increased opacity for clearer images */
+      opacity: 0.5; /* Same as desktop for consistency */
     }
 
-    /* Show/hide based on device */
-    @media (max-width: 768px) {
-      .bg-image { display: none; }
-      .mobile-bg-image { display: block; }
-    }
-
-    @media (min-width: 769px) {
-      .mobile-bg-image { display: none; }
-    }
-
-    /* Background Overlay - Lighter version */
+    /* Background Overlay */
     .background-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+      background: linear-gradient(135deg, rgba(15, 12, 41, 0.7) 0%, rgba(26, 26, 46, 0.7) 100%);
       z-index: -1;
-      backdrop-filter: blur(1px);
+      backdrop-filter: blur(2px);
     }
 
-    /* Lights - Lighter version */
+    /* Lights */
     .light {
       position: fixed;
       border-radius: 50%;
       filter: blur(60px);
-      opacity: 0.2; /* Reduced opacity */
+      opacity: 0.3;
       z-index: 0;
       animation: float 15s infinite ease-in-out;
     }
@@ -124,7 +114,7 @@
       50% { transform: translateY(-20px) rotate(5deg); }
     }
 
-    /* Rest of your existing CSS remains unchanged */
+    /* Content Box */
     .content-box {
       width: 95%;
       max-width: 500px;
@@ -138,6 +128,26 @@
       margin: 15px auto;
     }
 
+    /* Media Queries for Image Display */
+    @media (max-width: 768px) {
+      .bg-image {
+        display: none;
+      }
+      .mobile-bg-image {
+        display: block;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .bg-image {
+        display: block;
+      }
+      .mobile-bg-image {
+        display: none;
+      }
+    }
+
+    /* Rest of your existing styles... */
     h1 {
       color: #fff;
       font-size: clamp(1.5rem, 5vw, 2.2rem);
@@ -334,18 +344,9 @@
   </style>
 </head>
 <body>
-  <!-- Background Images Container -->
-  <div class="bg-container" id="bg-container">
-    <!-- Desktop Background Images -->
-    <img class="bg-image" id="desktop-bg-1" alt="Desktop Background 1">
-    <img class="bg-image" id="desktop-bg-2" alt="Desktop Background 2">
-    <!-- Add more desktop images as needed -->
-    
-    <!-- Mobile Background Images (9:16 ratio) -->
-    <img class="mobile-bg-image" id="mobile-bg-1" alt="Mobile Background 1">
-    <img class="mobile-bg-image" id="mobile-bg-2" alt="Mobile Background 2">
-    <!-- Add more mobile images as needed -->
-  </div>
+  <!-- Background Images Containers -->
+  <div class="bg-container" id="desktop-bg-container"></div>
+  <div class="bg-container" id="mobile-bg-container"></div>
   
   <div class="background-overlay"></div>
   <div class="light light-1"></div>
@@ -371,7 +372,6 @@
     </div>
   </div>
 
-  <!-- Not Eligible Card (Hidden by default) -->
   <div class="not-eligible-card" id="not-eligible-card">
     <h2>Access Denied</h2>
     <p>You are not eligible to proceed further.</p>
@@ -398,63 +398,66 @@
       'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1920'
     ];
 
+    // Mobile Background Images (9:16 ratio - replace with your vertical images)
     const mobileBackgroundImages = [
-      'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=1080&h=1920',
-      'https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?w=1080&h=1920',
-      'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1080&h=1920',
-      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=1080&h=1920',
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1080&h=1920',
-      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1080&h=1920',
-      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=1080&h=1920',
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1080&h=1920',
-      'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=1080&h=1920',
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1080&h=1920'
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=720&h=1280',
+      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=720&h=1280',
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=720&h=1280',
+      'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=720&h=1280',
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=720&h=1280',
+      'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=720&h=1280',
+      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=720&h=1280',
+      'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=720&h=1280',
+      'https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?w=720&h=1280',
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=720&h=1280'
     ];
 
     // Background Management
     let currentBgIndex = 0;
     
     function initBackgrounds() {
-      const container = document.getElementById('bg-container');
+      const desktopContainer = document.getElementById('desktop-bg-container');
+      const mobileContainer = document.getElementById('mobile-bg-container');
       
       // Create desktop image elements
       desktopBackgroundImages.forEach((img, index) => {
         const imgElement = document.createElement('img');
         imgElement.className = 'bg-image';
-        imgElement.id = `desktop-bg-${index+1}`;
         imgElement.src = img;
         imgElement.alt = `Desktop Background ${index + 1}`;
-        container.appendChild(imgElement);
+        desktopContainer.appendChild(imgElement);
       });
 
       // Create mobile image elements
       mobileBackgroundImages.forEach((img, index) => {
         const imgElement = document.createElement('img');
         imgElement.className = 'mobile-bg-image';
-        imgElement.id = `mobile-bg-${index+1}`;
         imgElement.src = img;
         imgElement.alt = `Mobile Background ${index + 1}`;
-        container.appendChild(imgElement);
+        mobileContainer.appendChild(imgElement);
       });
 
       // Set first images as active
-      document.querySelector('.bg-image').classList.add('active');
-      document.querySelector('.mobile-bg-image').classList.add('active');
+      const firstDesktopImage = document.querySelector('.bg-image');
+      const firstMobileImage = document.querySelector('.mobile-bg-image');
+      if (firstDesktopImage) firstDesktopImage.classList.add('active');
+      if (firstMobileImage) firstMobileImage.classList.add('active');
     }
 
     function changeBackground() {
       const desktopImages = document.querySelectorAll('.bg-image');
       const mobileImages = document.querySelectorAll('.mobile-bg-image');
       
-      desktopImages[currentBgIndex].classList.remove('active');
-      mobileImages[currentBgIndex].classList.remove('active');
+      desktopImages[currentBgIndex]?.classList.remove('active');
+      mobileImages[currentBgIndex]?.classList.remove('active');
       
-      currentBgIndex = (currentBgIndex + 1) % desktopImages.length;
-      desktopImages[currentBgIndex].classList.add('active');
-      mobileImages[currentBgIndex].classList.add('active');
+      currentBgIndex = (currentBgIndex + 1) % Math.max(desktopBackgroundImages.length, mobileBackgroundImages.length);
+      
+      desktopImages[currentBgIndex]?.classList.add('active');
+      mobileImages[currentBgIndex]?.classList.add('active');
     }
 
-    // Rest of your existing JavaScript remains unchanged
+    // Main App
     const questions = [
       ["Are you 18 years or older?", "Yes", "No"],
       ["How do you identify your gender?", "Male", "Female"],
