@@ -22,7 +22,7 @@
       overflow: hidden;
     }
 
-    /* Background Image Container */
+    /* Background Image Containers */
     .bg-container {
       position: fixed;
       top: 0;
@@ -32,37 +32,63 @@
       z-index: -2;
     }
 
+    /* Desktop Background Images */
     .bg-image {
       position: absolute;
       width: 100%;
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 0.7s ease-in-out;
+      transition: opacity 1.5s ease-in-out;
     }
 
     .bg-image.active {
-      opacity: 0.5;
+      opacity: 0.7; /* Increased opacity for clearer images */
     }
 
-    /* Background Overlay */
+    /* Mobile Background Images (9:16 ratio) */
+    .mobile-bg-image {
+      position: absolute;
+      width: 100%;
+      height: 177.78vw; /* 9:16 ratio */
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      display: none; /* Hidden by default */
+    }
+
+    .mobile-bg-image.active {
+      opacity: 0.7; /* Increased opacity for clearer images */
+    }
+
+    /* Show/hide based on device */
+    @media (max-width: 768px) {
+      .bg-image { display: none; }
+      .mobile-bg-image { display: block; }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-bg-image { display: none; }
+    }
+
+    /* Background Overlay - Lighter version */
     .background-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(15, 12, 41, 0.9) 0%, rgba(26, 26, 46, 0.7) 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
       z-index: -1;
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(1px);
     }
 
-    /* Lights */
+    /* Lights - Lighter version */
     .light {
       position: fixed;
       border-radius: 50%;
       filter: blur(60px);
-      opacity: 0.8;
+      opacity: 0.2; /* Reduced opacity */
       z-index: 0;
       animation: float 15s infinite ease-in-out;
     }
@@ -98,7 +124,7 @@
       50% { transform: translateY(-20px) rotate(5deg); }
     }
 
-    /* Content Box */
+    /* Rest of your existing CSS remains unchanged */
     .content-box {
       width: 95%;
       max-width: 500px;
@@ -132,7 +158,6 @@
       border-radius: 3px;
     }
 
-    /* Questions */
     .question-box {
       display: none;
       margin: 15px 0;
@@ -155,7 +180,6 @@
       line-height: 1.4;
     }
 
-    /* Options */
     .options {
       display: grid;
       grid-template-columns: 1fr;
@@ -185,7 +209,6 @@
       box-shadow: 0 8px 20px rgba(157, 78, 221, 0.4);
     }
 
-    /* Progress */
     .progress-container {
       width: 100%;
       margin: 15px 0;
@@ -216,7 +239,6 @@
       width: 0%;
     }
 
-    /* Continue Button */
     .finish-container {
       display: none;
       justify-content: center;
@@ -253,7 +275,6 @@
       transform: translateX(4px);
     }
 
-    /* Not Eligible Card */
     .not-eligible-card {
       display: none;
       background: rgba(255, 255, 255, 0.1);
@@ -280,7 +301,6 @@
       margin-bottom: 25px;
     }
 
-    /* Back Button */
     .back-button {
       background: linear-gradient(45deg, #9d4edd, #ff4d6d);
       color: #fff;
@@ -315,7 +335,17 @@
 </head>
 <body>
   <!-- Background Images Container -->
-  <div class="bg-container" id="bg-container"></div>
+  <div class="bg-container" id="bg-container">
+    <!-- Desktop Background Images -->
+    <img class="bg-image" id="desktop-bg-1" alt="Desktop Background 1">
+    <img class="bg-image" id="desktop-bg-2" alt="Desktop Background 2">
+    <!-- Add more desktop images as needed -->
+    
+    <!-- Mobile Background Images (9:16 ratio) -->
+    <img class="mobile-bg-image" id="mobile-bg-1" alt="Mobile Background 1">
+    <img class="mobile-bg-image" id="mobile-bg-2" alt="Mobile Background 2">
+    <!-- Add more mobile images as needed -->
+  </div>
   
   <div class="background-overlay"></div>
   <div class="light light-1"></div>
@@ -355,7 +385,7 @@
 
   <script>
     // Background Images (Replace with your actual image URLs)
-    const backgroundImages = [
+    const desktopBackgroundImages = [
       'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=1920',
       'https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?w=1920',
       'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1920',
@@ -368,37 +398,65 @@
       'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1920'
     ];
 
+    const mobileBackgroundImages = [
+      'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=1080&h=1920',
+      'https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?w=1080&h=1920',
+      'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1080&h=1920',
+      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=1080&h=1920',
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1080&h=1920',
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1080&h=1920',
+      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=1080&h=1920',
+      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1080&h=1920',
+      'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=1080&h=1920',
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1080&h=1920'
+    ];
+
     // Background Management
     let currentBgIndex = 0;
     
     function initBackgrounds() {
       const container = document.getElementById('bg-container');
       
-      // Create all image elements
-      backgroundImages.forEach((img, index) => {
+      // Create desktop image elements
+      desktopBackgroundImages.forEach((img, index) => {
         const imgElement = document.createElement('img');
         imgElement.className = 'bg-image';
+        imgElement.id = `desktop-bg-${index+1}`;
         imgElement.src = img;
-        imgElement.alt = `Background ${index + 1}`;
+        imgElement.alt = `Desktop Background ${index + 1}`;
         container.appendChild(imgElement);
       });
 
-      // Set first image as active
-      const firstImage = document.querySelector('.bg-image');
-      if (firstImage) firstImage.classList.add('active');
+      // Create mobile image elements
+      mobileBackgroundImages.forEach((img, index) => {
+        const imgElement = document.createElement('img');
+        imgElement.className = 'mobile-bg-image';
+        imgElement.id = `mobile-bg-${index+1}`;
+        imgElement.src = img;
+        imgElement.alt = `Mobile Background ${index + 1}`;
+        container.appendChild(imgElement);
+      });
+
+      // Set first images as active
+      document.querySelector('.bg-image').classList.add('active');
+      document.querySelector('.mobile-bg-image').classList.add('active');
     }
 
     function changeBackground() {
-      const images = document.querySelectorAll('.bg-image');
-      images[currentBgIndex].classList.remove('active');
+      const desktopImages = document.querySelectorAll('.bg-image');
+      const mobileImages = document.querySelectorAll('.mobile-bg-image');
       
-      currentBgIndex = (currentBgIndex + 1) % images.length;
-      images[currentBgIndex].classList.add('active');
+      desktopImages[currentBgIndex].classList.remove('active');
+      mobileImages[currentBgIndex].classList.remove('active');
+      
+      currentBgIndex = (currentBgIndex + 1) % desktopImages.length;
+      desktopImages[currentBgIndex].classList.add('active');
+      mobileImages[currentBgIndex].classList.add('active');
     }
 
-    // Main App
+    // Rest of your existing JavaScript remains unchanged
     const questions = [
-      ["Are you 18+? 😉", "Yes, I'm legal", "No"],
+      ["Are you 18 years or older?", "Yes", "No"],
       ["How do you identify your gender?", "Male", "Female"],
       ["What type of content are you most interested in?", "Female-focused", "Male-focused"],
       ["Do you prefer soft or hardcore content?", "Soft & Romantic", "Hardcore & Explicit"],
