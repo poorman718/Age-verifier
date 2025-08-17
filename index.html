@@ -39,11 +39,11 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 1.5s ease-in-out;
+      transition: opacity 1s ease-in-out;
     }
 
     .bg-image.active {
-      opacity: 0.5;
+      opacity: 500%; /* Increased from 0.3 to 0.5 for better visibility */
     }
 
     /* Mobile Images (9:16 ratio) */
@@ -53,12 +53,12 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 1.5s ease-in-out;
+      transition: opacity 1s ease-in-out;
       aspect-ratio: 9/16;
     }
 
     .mobile-bg-image.active {
-      opacity: 0.5;
+      opacity: 500%; /* Same as desktop for consistency */
     }
 
     /* Background Overlay */
@@ -68,9 +68,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(15, 12, 41, 0.7) 0%, rgba(26, 26, 46, 0.7) 100%);
+      background: linear-gradient(135deg, rgba(29, 29, 55, 0.237) 0%, rgba(29, 29, 55, 0.237) 100%);
       z-index: -1;
-      backdrop-filter: blur(2px);
+      backdrop-filter: clear;
     }
 
     /* Lights */
@@ -119,7 +119,7 @@
       width: 95%;
       max-width: 500px;
       background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(2px);
       border-radius: 20px;
       padding: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -398,18 +398,19 @@
       'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1920'
     ];
 
-    // Mobile Background Images (9:16 ratio - using your provided links)
+
+    // Mobile Background Images (9:16 ratio - replace with your vertical images)
     const mobileBackgroundImages = [
-      'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=1920',
-      'https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?w=1920',
-      'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1920',
-      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=1920',
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1920',
-      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1920',
-      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=1920',
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1920',
-      'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=1920',
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1920'
+      'https://image.cdn2.seaart.me/2025-02-24/cuu860de878c73feigh0/a4a83fba79c5d74b7e64de42dbcb74fd_high.webp',
+      'https://image.cdn2.seaart.me/2025-02-04/cuh08h5e878c73a6h8mg/763c41ca9852d35b7a104374be5ecd5f_high.webp',
+      'https://image.cdn2.seaart.me/2024-12-23/ctkb6nde878c73eb56dg/d6b367a6392cd2b73bd85e8553d38320_high.webp',
+      'https://image.cdn2.seaart.me/2024-07-04/cq38kmte878c73ep500g/cc7d04478b6e72d3c1d4e64867f43b2ba9e852c2_high.webp',
+      'https://image.cdn2.seaart.me/2025-04-24/d04vtsle878c73eeptr0/50573c99d2eaefcc42bc0f493b6c6a0e_high.webp',
+      'https://image.cdn2.seaart.me/2024-07-27/cqiaiite878c738sah30/c59a808469ce1b513c66fd50996c80455175e9c2_high.webp',
+      'https://image.cdn2.seaart.me/2024-11-26/ct2j1t5e878c73bcjlm0/71e3eb503a471c5984277c0058ab5cb3f0b6411f_high.webp',
+      'https://image.cdn2.seaart.me/2023-08-18/14698396937906181/efddb0684401e2fd7d71e992f19bd5d491a3dff1_high.webp',
+      'https://image.cdn2.seaart.me/2024-11-27/ct3he0le878c73dualqg/416d3fa4a7aced624045ba0d47ee827c9c0a1a76_high.webp',
+      'https://image.cdn2.seaart.me/2025-03-17/cvbmiole878c73c1qihg/c482ec7cddd457d7db05a67860dc9fd5_high.webp'
     ];
 
     // Background Management
@@ -432,7 +433,7 @@
       mobileBackgroundImages.forEach((img, index) => {
         const imgElement = document.createElement('img');
         imgElement.className = 'mobile-bg-image';
-        imgElement.src = img.replace('ibb.co', 'i.ibb.co') + '.jpg'; // Convert to direct image links
+        imgElement.src = img;
         imgElement.alt = `Mobile Background ${index + 1}`;
         mobileContainer.appendChild(imgElement);
       });
@@ -459,16 +460,16 @@
 
     // Main App
     const questions = [
-      ["Are you 18 years or older?", "Yes", "No"],
-      ["How do you identify your gender?", "Male", "Female"],
-      ["What type of content are you most interested in?", "Female-focused", "Male-focused"],
-      ["Do you prefer soft or hardcore content?", "Soft & Romantic", "Hardcore & Explicit"],
-      ["Do you enjoy solo or couple scenes more?", "Solo", "Couple"],
-      ["Would you like to see straight or same-sex content?", "Straight", "Same-Sex"],
-      ["Are you more into visual or story-based content?", "Visual Focus", "Story & Roleplay"],
-      ["Do you like amateur or professional content?", "Amateur (Real Vibes)", "Professional (Studio Shot)"],
-      ["Do you prefer long videos or short clips?", "Short & Sweet", "Full-Length Experience"],
-      ["Would you like to receive custom content suggestions?", "Yes, personalize for me", "No, I'll explore myself"]
+      ["Are you 18+ 😉?", "Yes, I'm legal", "No (Access denied)"],
+      ["What's your gender?", "Male", "Female"],
+      ["What turns you on more?", "Straight (Male + Female)", "Same Sex (Gay/Lesbian)"],
+      ["Who excites you more?", "Young & wild (18-25)", "Hot & mature (30+)"],
+      ["What do you prefer watching?", "Real amateur fun", "Professional scenes"],
+      ["What's your vibe?", "Slow & romantic 💖", "Rough & hardcore 💦"],
+      ["Solo or couple action?", "Solo play", "Couples only"],
+      ["Into rolrplry?", "Hell yes!", "Not really"],
+      ["Like a little kink?", "BDSM, please 😈", "Keep it soft"],
+      ["What's your flavor?", "Desi & spicy 🇮🇳", "International 🔥"]
     ];
 
     const container = document.getElementById("question-container");
@@ -488,7 +489,7 @@
       div.className = "question-box";
       div.id = `q${i}`;
       div.innerHTML = `
-        <div class="question-text"><strong>${i + 1}. ${q[0]}</strong></div>
+        <div class="question-text"><strong> ${q[0]}</strong></div>
         <div class="options">
           <div class="option" onclick="selectOption(${i}, 0)">${q[1]}</div>
           <div class="option" onclick="selectOption(${i}, 1)">${q[2]}</div>
