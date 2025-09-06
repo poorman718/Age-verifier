@@ -363,7 +363,7 @@
     </div>
     <div id="question-container"></div>
     <div class="finish-container" id="finish-container">
-      <a href="https://heylink.me/lilifreeha/" class="finish" target="_blank">
+      <a href="https://heylink.me/lilifreeha" class="finish" target="_blank">
         Continue
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
@@ -386,26 +386,26 @@
   <script>
     // Background Images (Replace with your actual image URLs)
     const desktopBackgroundImages = [
-      'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=1920',
-      'https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?w=1920',
-      'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1920',
-      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=1920',
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1920',
-      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1920',
-      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=1920',
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1920',
-      'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=1920',
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1920'
+      'https://64.media.tumblr.com/0d1e3aeea25dc6b352ba9f6a72be03e0/b0d275ab4e51e9c8-7a/s2048x3072/251f989420feb4aff032fd1216162a5777dda957.webp',
+      'https://64.media.tumblr.com/6528a11faa487a77cd65c2db87f14ff1/6cd991651b00efba-18/s2048x3072/52f85b10411b7e54245067a6c2916d8af500c5ab.jpg',
+      'https://64.media.tumblr.com/d113fc8c14b52f8bbd3ee286efe4b097/6cd991651b00efba-50/s2048x3072/c708b3c7b49fef02b834ee6f1080f9626ff175a1.jpg',
+      'https://64.media.tumblr.com/9c13759b651a31d487131980c2a7b4e6/fd30a3883f545f04-7a/s2048x3072/28a88ef205915f8da0dbe06f005c41285c23526f.jpg',
+      'https://64.media.tumblr.com/cdf04ca9c835cd7b48f49dca3fdec5f0/fd30a3883f545f04-e9/s2048x3072/948bc163916219284bf03ab0d5c5e9fba834f734.jpg',
+      'https://64.media.tumblr.com/61b2e9713dd46d5f3d172e35e84364dc/fd30a3883f545f04-25/s2048x3072/10abd5046ceb2d17445aca1f4db678404643fa63.jpg',
+      'https://64.media.tumblr.com/8b4fd744bc3a2f2203fcdb7a173caac7/fd30a3883f545f04-59/s2048x3072/95244200c79b205e228ae6cae7bc7e1ad5834561.jpg',
+      'https://64.media.tumblr.com/b9364965b842c29654b2c73ae671c12b/fd30a3883f545f04-36/s2048x3072/57f6d6713f4a10c92e02dfc588016e1c377de7d0.jpg',
+      'https://64.media.tumblr.com/1e8cf2721be4979a821963f666d133da/fd30a3883f545f04-f6/s2048x3072/f28cea80f63368b81cc420112f6a989657ddf92e.jpg',
+      'https://64.media.tumblr.com/a54ff16a61fb6a8838904f1da3d39672/fd30a3883f545f04-76/s2048x3072/30d63c03edd642acd8c9aa4170c3ed60a9e5d2b2.jpg'
     ];
 
 
     // Mobile Background Images (9:16 ratio - replace with your vertical images)
     const mobileBackgroundImages = [
-      'https://image.cdn2.seaart.me/2025-02-24/cuu860de878c73feigh0/a4a83fba79c5d74b7e64de42dbcb74fd_high.webp',
-      'https://image.cdn2.seaart.me/2025-02-04/cuh08h5e878c73a6h8mg/763c41ca9852d35b7a104374be5ecd5f_high.webp',
-      'https://image.cdn2.seaart.me/2024-12-23/ctkb6nde878c73eb56dg/d6b367a6392cd2b73bd85e8553d38320_high.webp',
-      'https://image.cdn2.seaart.me/2024-07-04/cq38kmte878c73ep500g/cc7d04478b6e72d3c1d4e64867f43b2ba9e852c2_high.webp',
-      'https://image.cdn2.seaart.me/2025-04-24/d04vtsle878c73eeptr0/50573c99d2eaefcc42bc0f493b6c6a0e_high.webp',
+      'https://image.cdn2.seaart.me/2025-01-04/ctsk1jle878c738co93g/c81a6a2d28cea858a02f703d0dc2790a22ba463a_high.webp',
+      'https://image.cdn2.seaart.me/2025-01-11/cu119jde878c73f29big-66/e63d43cd15514238a7e68610d61d999a_high.webp',
+      'https://image.cdn2.seaart.me/2025-04-13/cvtk2f5e878c738emedg/1ddf11fab5685b12feb48b776b87648c_high.webp',
+      'https://image.cdn2.seaart.me/static/images/20230713/cf8ef4ac33ecd7f28005ab9c6335d553_high.webp',
+      'https://image.cdn2.seaart.me/2024-07-11/cq82fpde878c73b606g0/c0614fc08c844cd4b15236e5f22700edc572ea16_high.webp',
       'https://image.cdn2.seaart.me/2024-07-27/cqiaiite878c738sah30/c59a808469ce1b513c66fd50996c80455175e9c2_high.webp',
       'https://image.cdn2.seaart.me/2024-11-26/ct2j1t5e878c73bcjlm0/71e3eb503a471c5984277c0058ab5cb3f0b6411f_high.webp',
       'https://image.cdn2.seaart.me/2023-08-18/14698396937906181/efddb0684401e2fd7d71e992f19bd5d491a3dff1_high.webp',
